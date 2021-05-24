@@ -26,129 +26,72 @@ namespace SCDT52CW2.Areas.Asset.Controllers
             return View(await _context.Assets.ToListAsync());
         }
 
-        // GET: Asset/Asset/Details/5
-        public async Task<IActionResult> Details(int? id)
+        //API Call for the data table to get all of the Assets, as this needs to be returned as a json object...
+        [HttpGet]
+        public IActionResult GetAssets()
         {
+            var all = _context.Assets;
+            return Json(new { data = all });
+        }
+
+        //Upsert Action
+        public async Task<IActionResult> Upsert(int? id)
+        {
+            Assets asset = new Assets();
+
             if (id == null)
             {
-                return NotFound();
+                return View(asset);
             }
 
-            var assets = await _context.Assets
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assets == null)
+            asset = await _context.Assets.FindAsync(id.GetValueOrDefault());
+
+            if (asset == null)
             {
                 return NotFound();
             }
 
-            return View(assets);
+            return View(asset);
         }
 
-        // GET: Asset/Asset/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Asset/Asset/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AssetID,Desc,Location")] Assets assets)
+        //POST
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(Assets asset)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(assets);
+                if (asset.Id == 0)
+                {
+                    await _context.Assets.AddAsync(asset);
+                }
+                else
+                {
+                    _context.Assets.Update(asset);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(assets);
+            return View(asset);
         }
 
-        // GET: Asset/Asset/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            var asset = await _context.Assets.FindAsync(id);
+
+            if (asset == null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Error - Asset Not Found" });
             }
 
-            var assets = await _context.Assets.FindAsync(id);
-            if (assets == null)
-            {
-                return NotFound();
-            }
-            return View(assets);
-        }
+            _context.Assets.Remove(asset);
 
-        // POST: Asset/Asset/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AssetID,Desc,Location")] Assets assets)
-        {
-            if (id != assets.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(assets);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AssetsExists(assets.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(assets);
-        }
-
-        // GET: Asset/Asset/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var assets = await _context.Assets
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assets == null)
-            {
-                return NotFound();
-            }
-
-            return View(assets);
-        }
-
-        // POST: Asset/Asset/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var assets = await _context.Assets.FindAsync(id);
-            _context.Assets.Remove(assets);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool AssetsExists(int id)
-        {
-            return _context.Assets.Any(e => e.Id == id);
+            return Json(new { success = true, message = "Asset Deleted" });
         }
     }
+
+
+
 }
