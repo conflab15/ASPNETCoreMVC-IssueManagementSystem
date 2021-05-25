@@ -1,0 +1,69 @@
+﻿@model SCDT52CW2Models.ViewModels.GeneralIssueModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Category Manager";
+}
+
+<form method="post" asp-action="CreateGeneral">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <label asp-for="IssueID" class="control-label"></label>
+                <input asp-for="IssueID" class="form-control disabled" />
+
+            </div>
+            <div class="col-md-8">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control disabled" />
+
+            </div>
+            <div class="col-md-8">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control disabled" />
+
+            </div>
+            <div class="col-md-8">
+                <label asp-for="UserID" class="control-label"></label>
+                <input asp-for="UserID" class="form-control disabled" />
+
+            </div>
+            <div class="col-md-8">
+                <label asp-for="Desc" class="control-label"></label>
+                <input asp-for="Desc" class="form-control" />
+
+            </div>
+            <div class="col-md-8">
+                <label asp-for="Desc" class="control-label"></label>
+                <input asp-for="Desc" class="form-control" />
+
+            </div>
+
+            <!-- This here is where the Actions need to be added to the form before submitting the model, as the Model.IsValid Function will deny it from entering the db... -->
+
+            <div class="col-md-8">
+                <label asp-for="isClosed" class="control-label"></label>
+                <input asp-for="isClosed" class="form-control disabled" />
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <partial name="_UpdateForm" model="Model.issueUpdates" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Create Issue" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

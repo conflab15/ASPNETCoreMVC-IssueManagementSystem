@@ -1,0 +1,33 @@
+﻿@model SCDT52CW2Models.ViewModels.IssuesModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Issue Manager";
+}
+
+<div class="container shadow-lg p-3 rounded justify-content-xl-center text-center">
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Issue Tickets</h1>
+        </div>
+        <div class="col-md-8">
+            <a class="btn btn-primary" asp-action="CreateGeneral">Create General Issue</a>
+            <a class="btn btn-primary" asp-action="CreateTechnical">Create Technical Issue</a>
+
+        </div>
+    </div>
+
+    <h1>Issue Tickets for: @User.Identity.Name</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <partial name="_GeneralIssue" model="Model.GeneralIssue"/>
+        </div>
+
+        <div class="col-md-6">
+            <partial name="_TechnicalIssue" model="Model.TechnicalIssue" />
+        </div>
+    </div>
+
+
+</div>

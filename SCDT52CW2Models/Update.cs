@@ -16,7 +16,7 @@ namespace SCDT52CW2Models
         public DateTime Date { get; set; }
 
         [Required, DataType(DataType.Time)]
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
 
         [Required]
         public string UserId { get; set; }
