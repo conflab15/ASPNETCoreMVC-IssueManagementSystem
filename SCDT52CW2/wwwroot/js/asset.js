@@ -5,14 +5,14 @@ $(document).ready(function () {
 });
 
 function loadTableData() {
-    dataTable = $('#assetData').dataTable({
+    dataTable = $('#asset-data').DataTable({
         'ajax': {
             "url": '/Asset/Asset/GetAssets'
         },
         'columns': [
-            { 'data': 'asset id', 'width': '20%' },
-            { 'data': 'asset description', 'width': '30%' },
-            { 'data': 'asset location', 'width': '20%' },
+            { 'data': 'assetID', 'width': '20%' },
+            { 'data': 'desc', 'width': '30%' },
+            { 'data': 'location', 'width': '20%' },
             {
                 'data': 'id',
                 'render': function (data) {
