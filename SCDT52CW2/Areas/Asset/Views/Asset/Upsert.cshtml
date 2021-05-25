@@ -5,37 +5,42 @@
 }
 
 <form method="post" asp-action="Upsert">
-    <div class="container">
+    <div class="container bg-dark rounded shadow-lg p-3 rounded justify-content-xl-center text-center text-light">
         <div class="row">
-            <div class="col-4">
-                <label asp-for="AssetID"></label>
-            </div>
-            <div class="col-8">
-                <input asp-for="AssetID" class="form-control" />
-            </div>
-            <div class="col-4">
-                <label asp-for="Desc"></label>
-            </div>
-            <div class="col-8">
-                <input asp-for="Desc" class="form-control" />
-            </div>
-            <div class="col-4">
-                <label asp-for="Location"></label>
-            </div>
-            <div class="col-8">
-                <input asp-for="Location" class="form-control" />
+            <div class="col-12 pb-4">
+                <h1>Create new Asset</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-8 offset-4 pt-1">
+            <div class="col-4 pt-2">
+                @Html.DisplayNameFor(Model => Model.AssetID)
+            </div>
+            <div class="col-8 pt-2">
+                <input asp-for="AssetID" class="form-control" placeholder="Enter the Assets ID" />
+            </div>
+            <div class="col-4 pt-2">
+                @Html.DisplayNameFor(Model => Model.Desc)
+            </div>
+            <div class="col-8 pt-2">
+                <input asp-for="Desc" class="form-control" placeholder="Enter a description for the Asset"/>
+            </div>
+            <div class="col-4 pt-2">
+                @Html.DisplayNameFor(Model => Model.Location)
+            </div>
+            <div class="col-8 pt-2">
+                <input asp-for="Location" class="form-control" placeholder="Enter the Assets location" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 offset-4 pt-4">
                 @if (Model.Id != 0)
                 {
                     <div class="row">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary form-control" asp-route-id="@Model.Id">Update</button>
+                            <button type="submit" class="btn btn-primary form-control" asp-route-id="@Model.Id">Update Asset</button>
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                            <a asp-action="Index" class="btn btn-success form-control">Back to Asset List</a>
                         </div>
                     </div>
                 }
@@ -43,10 +48,10 @@
                 {
                     <div class="row">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary form-control">Create</button>
+                            <button type="submit" class="btn btn-primary form-control">Create Asset</button>
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                            <a asp-action="Index" class="btn btn-success form-control">Back to Asset List</a>
                         </div>
                     </div>}
             </div>
