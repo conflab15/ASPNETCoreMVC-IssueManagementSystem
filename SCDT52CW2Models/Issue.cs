@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SCDT52CW2Models
 {
-    public class TechnicalIssue
+    public class Issue
     {
         [Key]
         public int Id { get; set; }
@@ -13,20 +13,17 @@ namespace SCDT52CW2Models
         [Required, Display(Name = "Issue ID")]
         public string IssueID { get; set; }
 
-        [Required, DataType(DataType.Date)]
+        [Required, DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
-
-        [Required, DataType(DataType.Time)]
-        public DateTime Time { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
+        [Required, Display(Name = "Created by:")]
+        public string Author { get; set; }
+
         [Required, Display(Name = "Issue Description")]
         public string Desc { get; set; }
-
-        [Required, Display(Name ="Technical Assets Affected")]
-        public List<Assets> AffectedAssets { get; set; }
 
         [Required, Display(Name = "Actions")]
         public List<Update> Actions { get; set; }
@@ -34,5 +31,17 @@ namespace SCDT52CW2Models
         [Required]
         public bool isClosed { get; set; }
 
+        //Below Variables apply for technical issues 
+        [Required, Display(Name = "Technical Issue?")]
+        public bool isTechnical { get; set; }
+
+        [Display(Name = "Assets Affected")]
+        public List<Assets> AffectedAssets { get; set; }
+
+        public Issue()
+        {
+            Actions = new List<Update>();
+            AffectedAssets = new List<Assets>();
+        }
     }
 }

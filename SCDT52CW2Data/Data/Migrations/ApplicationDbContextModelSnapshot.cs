@@ -235,26 +235,30 @@ namespace SCDT52CW2.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IssueId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TechnicalIssueId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TechnicalIssueId");
+                    b.HasIndex("IssueId");
 
                     b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("SCDT52CW2Models.GeneralIssue", b =>
+            modelBuilder.Entity("SCDT52CW2Models.Issue", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -267,9 +271,6 @@ namespace SCDT52CW2.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -277,42 +278,12 @@ namespace SCDT52CW2.Data.Migrations
                     b.Property<bool>("isClosed")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("GeneralIssues");
-                });
-
-            modelBuilder.Entity("SCDT52CW2Models.TechnicalIssue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Desc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IssueID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isClosed")
+                    b.Property<bool>("isTechnical")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TechnicalIssues");
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("SCDT52CW2Models.Update", b =>
@@ -322,38 +293,32 @@ namespace SCDT52CW2.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GeneralIssueId")
+                    b.Property<int>("IssueID")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TechnicalIssueId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdateType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("isResolved")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GeneralIssueId");
+                    b.HasIndex("IssueID");
 
-                    b.HasIndex("TechnicalIssueId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Updates");
                 });
@@ -411,28 +376,29 @@ namespace SCDT52CW2.Data.Migrations
 
             modelBuilder.Entity("SCDT52CW2Models.Assets", b =>
                 {
-                    b.HasOne("SCDT52CW2Models.TechnicalIssue", null)
+                    b.HasOne("SCDT52CW2Models.Issue", null)
                         .WithMany("AffectedAssets")
-                        .HasForeignKey("TechnicalIssueId");
+                        .HasForeignKey("IssueId");
                 });
 
             modelBuilder.Entity("SCDT52CW2Models.Update", b =>
                 {
-                    b.HasOne("SCDT52CW2Models.GeneralIssue", null)
+                    b.HasOne("SCDT52CW2Models.Issue", null)
                         .WithMany("Actions")
-                        .HasForeignKey("GeneralIssueId");
+                        .HasForeignKey("IssueID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SCDT52CW2Models.TechnicalIssue", null)
-                        .WithMany("Actions")
-                        .HasForeignKey("TechnicalIssueId");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SCDT52CW2Models.GeneralIssue", b =>
-                {
-                    b.Navigation("Actions");
-                });
-
-            modelBuilder.Entity("SCDT52CW2Models.TechnicalIssue", b =>
+            modelBuilder.Entity("SCDT52CW2Models.Issue", b =>
                 {
                     b.Navigation("Actions");
 

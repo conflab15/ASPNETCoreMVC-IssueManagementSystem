@@ -6,28 +6,27 @@
 }
 
 <div class="container shadow-lg p-3 rounded justify-content-xl-center text-center">
-    <div class="row">
+    <div class="row" pb-2>
         <div class="col-md-4">
             <h1>Issue Tickets</h1>
         </div>
         <div class="col-md-8">
-            <a class="btn btn-primary" asp-action="CreateGeneral">Create General Issue</a>
-            <a class="btn btn-primary" asp-action="CreateTechnical">Create Technical Issue</a>
-
+            <button class="btn btn-primary" asp-action="Create">Raise an Issue</button>
         </div>
     </div>
 
     <h1>Issue Tickets for: @User.Identity.Name</h1>
 
-    <div class="row">
-        <div class="col-md-6">
-            <partial name="_GeneralIssue" model="Model.GeneralIssue"/>
+    <div class="row pt-5">
+        <div class="col-6">
+            <h1>General Issues</h1>
         </div>
-
-        <div class="col-md-6">
-            <partial name="_TechnicalIssue" model="Model.TechnicalIssue" />
+        <div class="col-6">
+            <h1>Technical Issues</h1>
         </div>
     </div>
+
+  
 
 
 </div>

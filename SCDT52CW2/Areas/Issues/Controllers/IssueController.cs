@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Data;
 using SCDT52CW2Models;
 using SCDT52CW2Models.ViewModels;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace SCDT52CW2.Areas.Issues.Controllers
 {
     [Area("Issues")]
-    [Authorize]
+    //[Authorize]
     public class IssueController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,131 +22,113 @@ namespace SCDT52CW2.Areas.Issues.Controllers
             _context = context;
         }
 
+        //Delete Index below, create API calls for the Data Tables for general and technical issues...
+
         public ViewResult Index()
         {
-            IssuesModel issues = new IssuesModel
+            IssuesModel issueModel = new IssuesModel
             {
-                generalIssue = from e in _context.GeneralIssues
-                               where e.UserId == User.Identity.Name
+                generalIssue = from e in _context.Issues
+                               where e.isTechnical == false
                                select e,
 
-                technicalIssue = from f in _context.TechnicalIssues
-                                 where f.UserId == User.Identity.Name
+                technicalIssue = from f in _context.Issues
+                                 where f.isTechnical == true
                                  select f
             };
 
-            return View(issues);
+            return View(issueModel);
         }
 
-        //------ Functionality for General Issues ------
+        //------ Functionality for Issues ------
 
-        public IActionResult CreateGeneral()
+        //GET - Create data and send to view to populate fields
+        public IActionResult Create()
         {
-            GeneralIssueModel issue = new GeneralIssueModel(); //Creating a ViewModel
 
             //Instantiating a new GeneralIssue Object to set variables beforehand...
-            GeneralIssue general = new GeneralIssue();
-            general.IssueID = "GEN00" + general.Id;
-            general.Date = DateTime.Now.Date;
-            general.Time = DateTime.Now.TimeOfDay;
-            general.UserId = User.Identity.Name;
+            Issue general = new Issue();
+            general.IssueID = "Issue" + general.Id;
+            general.Date = DateTime.Now;
+            general.Author = User.Identity.Name;
+
+            var user = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            general.UserId = user.Id;
             general.isClosed = false;
 
-            //Instantiating a new Update Object to pass this to the object when sending to the model...
-            Update update = new Update();
-            update.UpdateType = "Init";
-            update.Date = DateTime.Now.Date;
-            update.Time = DateTime.Now.TimeOfDay;
-            update.UserId = User.Identity.Name;
-            update.Notes = "Ticket Initialised";
-            update.isResolved = false;
-
-            //general.Actions.Add(update);
-
-            issue.issue = general; //Assigning the Issue to the ViewModel
-            issue.issueUpdates.Add(update); //Assigning the Updates to the ViewModel
-
-            return View(issue); //Passing the View Model to the View...
+            return View(general); //Passing the View Model to the View...
         }
 
-        public async Task<IActionResult> UpsertGeneral(int? id)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,IssueID,DateUserId,Author,Actions,isClosed,isTechnical,AffectedAssets")] Issue newIssue)
         {
-            GeneralIssue generalIssue = new GeneralIssue();
-
-            if (id == null)
+            if (ModelState.IsValid)
             {
-                return View(generalIssue);
+                _context.Issues.Add(newIssue);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Details), new { id = newIssue.Id });
             }
+            return View(newIssue);
+        }
 
-            generalIssue = await _context.GeneralIssues.FindAsync(id.GetValueOrDefault());
-
-            if (generalIssue == null)
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
 
-            return View(generalIssue);
-        }
+            var issue = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);
 
-        //POST
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpsertGeneral(GeneralIssue generalIssue)
-        {
-            if (ModelState.IsValid)
-            {
-                if (generalIssue.Id == 0)
-                {
-                    await _context.GeneralIssues.AddAsync(generalIssue);
-                }
-                else
-                {
-                    _context.GeneralIssues.Update(generalIssue);
-                }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(generalIssue);
-        }
-
-        //------ Functionality for Technical Issues ------
-
-        public async Task<IActionResult> UpsertTechnical(int? id)
-        {
-            TechnicalIssue technicalIssue = new TechnicalIssue();
-
-            if (id == null)
-            {
-                return View(technicalIssue);
-            }
-
-            technicalIssue = await _context.TechnicalIssues.FindAsync(id.GetValueOrDefault());
-
-            if (technicalIssue == null)
+            if(issue == null)
             {
                 return NotFound();
             }
 
-            return View(technicalIssue);
+            //Get comments and add to the list...
+            issue.Actions = await _context.Updates.Where(action => action.IssueID == id).ToListAsync();
+
+            return View(issue);
         }
 
-        //POST
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpsertTechnical(TechnicalIssue technicalIssue)
+        //------ Functionality to perform Updates/Actions ------
+        [ActionName("Update")]
+        public async Task<IActionResult> Update(int? id, string notes, bool resolved)
         {
-            if (ModelState.IsValid)
+            var issueModel = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (issueModel == null)
             {
-                if (technicalIssue.Id == 0)
-                {
-                    await _context.TechnicalIssues.AddAsync(technicalIssue);
-                }
-                else
-                {
-                    _context.TechnicalIssues.Update(technicalIssue);
-                }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(technicalIssue);
+
+            //Creating an update and assigning data to send to the view as auto filled data for the comment... 
+            var update = new Update();
+            update.Date = DateTime.Now;
+            update.Author = User.Identity.Name;
+            update.IssueID = issueModel.Id;
+
+            //Data passed back from the view implemented here...
+            update.Notes = notes;
+            update.isResolved = resolved;
+
+            //Getting the Users ID...
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            update.UserId = user.Id;
+
+            //Add comment to list and save to db...
+            _context.Update(update);
+            await _context.SaveChangesAsync();
+
+            issueModel.Actions.Add(update);
+
+            _context.Update(issueModel);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = id });
         }
+
+
     }
 }

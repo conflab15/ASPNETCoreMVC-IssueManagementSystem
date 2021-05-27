@@ -8,8 +8,7 @@ namespace SCDT52CW2Data
     {
 
         public DbSet<Assets> Assets { get; set; }
-        public DbSet<GeneralIssue> GeneralIssues { get; set; }
-        public DbSet<TechnicalIssue> TechnicalIssues { get; set; }
+        public DbSet<Issue> Issues { get; set; }
         public DbSet<Update> Updates { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

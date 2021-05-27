@@ -8,8 +8,8 @@ namespace SCDT52CW2Models.ViewModels
 {
     public class IssuesModel
     {
-        public IEnumerable<GeneralIssue> generalIssue { get; set; }
+        public IEnumerable<Issue> generalIssue { get; set; } //List General Issues
 
-        public IEnumerable<TechnicalIssue> technicalIssue { get; set; }
+        public IEnumerable<Issue> technicalIssue { get; set; } //List Technical Issues
     }
 }

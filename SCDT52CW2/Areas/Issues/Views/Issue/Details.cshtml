@@ -1,0 +1,77 @@
+﻿@model SCDT52CW2Models.Issue
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Manage Issue";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <h1>Issue ID: @Html.DisplayFor(model => model.IssueID)</h1>
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </div>
+        <div class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Author)
+        </div>
+        <div class="col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Desc)
+        </div>
+        <div class="col-sm-10">
+            @Html.DisplayFor(model => model.Desc)
+        </div>
+
+        @if(Model.isTechnical)
+            {
+                @if(Model.AffectedAssets.Count > 0)
+                {
+                    <table class="table table-bordered table-striped table-light table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th scope="col">AssetID</th>
+                                <th scope="col">Desc</th>
+                                <th scope="col">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var asset in Model.AffectedAssets)
+                            {
+                                <tr>
+                                    <td>@asset.AssetID</td>
+                                    <td>@asset.Desc</td>
+                                    <td>@asset.Location</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-primary" role="alert">
+                        No assets are affected with this ticket...
+                    </div>
+                }
+            }
+    </div>
+</div>
+
+<div class="row justify-content-center py-3 alert alert-secondary">
+    <div class="col-md-10">
+        <h3 class="py-2 text-center">Create Issue Update</h3>
+        <form method="post" asp-action="Update">
+            <input name="id" value="@Model.Id" type="hidden" readonly />
+            <textarea type="text" class="form-control py-3" placeholder="Action Details..." name="action" rows="3"></textarea>
+
+            <button type="submit" class="btn btn-block btn-primary mt-2">Add Issue Update</button>
+
+        </form>
+    </div>
+</div>
