@@ -11,18 +11,13 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IssueID" class="control-label">@Html.DisplayNameFor(m => m.IssueID)</label>
-                <input asp-for="IssueID" readonly class="form-control" />
-                <span asp-validation-for="IssueID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Date" class="control-label">@Html.DisplayNameFor(m => m.Date)</label>
-                <input type="date" asp-for="Date" readonly class="form-control" />
+                <input asp-for="Date" readonly class="form-control" value="@Model.Date"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Author" class="control-label">@Html.DisplayNameFor(m => m.Author)</label>
-                <input asp-for="Author" readonly class="form-control" />
+                <input asp-for="Author" readonly class="form-control" value="@Model.Author"/>
                 <span asp-validation-for="UserID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,22 +26,28 @@
                 <span asp-validation-for="Desc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="isClosed" class="control-label">@Html.DisplayNameFor(m => m.isClosed)</label>
-                <input type="checkbox" asp-for="isClosed" readonly class="form-control" />
-                <span asp-validation-for="isClosed" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="isTechnical" class="control-label">@Html.DisplayNameFor(m => m.isTechnical)</label>
-                <input type="checkbox" asp-for="isTechnical" class="form-control" />
+                <label asp-for="isTechnical">
+                    Technical Issue?:
+                    <select asp-for="isTechnical">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </label>
                 <span asp-validation-for="isTechnical" class="text-danger"></span>
             </div>
-
-            <!-- Needs to check if the above box is ticked, then allow the user to select assets to add to the list from...-->
-
-
+            <div class="form-group">
+                <label asp-for="isClosed">
+                    Ticket Status:
+                    <select asp-for="isClosed">
+                        <option value="false">Keep Ticket Open</option>
+                        <option value="true">Close Ticket</option>
+                    </select>
+                </label>
+                <span asp-validation-for="isClosed" class="text-danger"></span>
+            </div>
             <div class="row">
                 <div class="col">
-                    <input type="submit" asp-action="Create" value="Create Issue" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </div>
         </form>

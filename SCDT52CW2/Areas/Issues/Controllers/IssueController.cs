@@ -24,8 +24,9 @@ namespace SCDT52CW2.Areas.Issues.Controllers
 
         //Delete Index below, create API calls for the Data Tables for general and technical issues...
 
-        public ViewResult Index()
+        public ActionResult Index()
         {
+            //This is rubbish
             IssuesModel issueModel = new IssuesModel
             {
                 generalIssue = from e in _context.Issues
@@ -40,15 +41,30 @@ namespace SCDT52CW2.Areas.Issues.Controllers
             return View(issueModel);
         }
 
+        //API Calls for the Data Tables in the Issue Area Index
+        [HttpGet]
+        public IActionResult GetGeneralIssues()
+        {
+            var general = _context.Issues.Where(model => model.isTechnical == false);
+            return Json(new { data = general });
+        }
+
+        [HttpGet]
+        public IActionResult GetTechnicalIssues()
+        {
+            var technical = _context.Issues.Where(model => model.isTechnical);
+            return Json(new { data = technical });
+        }
+
+
         //------ Functionality for Issues ------
 
         //GET - Create data and send to view to populate fields
-        public IActionResult Create()
+        [HttpGet]
+        public ActionResult Create()
         {
-
             //Instantiating a new GeneralIssue Object to set variables beforehand...
-            Issue general = new Issue();
-            general.IssueID = "Issue" + general.Id;
+            var general = new Issue();
             general.Date = DateTime.Now;
             general.Author = User.Identity.Name;
 
@@ -60,8 +76,9 @@ namespace SCDT52CW2.Areas.Issues.Controllers
             return View(general); //Passing the View Model to the View...
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IssueID,DateUserId,Author,Actions,isClosed,isTechnical,AffectedAssets")] Issue newIssue)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Date,UserId,Author,Actions,isClosed,isTechnical,AffectedAssets")] Issue newIssue)
         {
             if (ModelState.IsValid)
             {

@@ -10,9 +10,6 @@ namespace SCDT52CW2Models
         [Key]
         public int Id { get; set; }
 
-        [Required, Display(Name = "Issue ID")]
-        public string IssueID { get; set; }
-
         [Required, DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 

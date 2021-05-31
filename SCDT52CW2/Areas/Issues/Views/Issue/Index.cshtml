@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Issue Manager";
+    ViewData["Title"] = "Issues";
 }
 
 <div class="container shadow-lg p-3 rounded justify-content-xl-center text-center">
@@ -11,22 +11,41 @@
             <h1>Issue Tickets</h1>
         </div>
         <div class="col-md-8">
-            <button class="btn btn-primary" asp-action="Create">Raise an Issue</button>
+            <a class="btn btn-primary" asp-action="Create">Create</a>
         </div>
     </div>
 
-    <h1>Issue Tickets for: @User.Identity.Name</h1>
-
-    <div class="row pt-5">
-        <div class="col-6">
-            <h1>General Issues</h1>
-        </div>
-        <div class="col-6">
-            <h1>Technical Issues</h1>
-        </div>
+    <div class="p-4 rounded">
+        <h1>General Issues</h1>
+        <table id="gen-data" class="table table-bordered w-100">
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>Issue ID</th>
+                    <th>Issue Description</th>
+                    <th>Issue Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
     </div>
 
-  
-
+    <div class="p-4 rounded">
+        <h1>Technical Issues</h1>
+        <table id="technical-data" class="table table-bordered w-100">
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>Issue ID</th>
+                    <th>Issue Description</th>
+                    <th>Issue Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
 </div>
+
+@section Scripts{ 
+    <script src="~/js/general.js"></script>
+    <script src="~/js/technical.js"></script>
+}
