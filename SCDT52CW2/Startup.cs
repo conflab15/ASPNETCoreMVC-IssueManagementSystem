@@ -32,7 +32,7 @@ namespace SCDT52CW2
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
@@ -44,7 +44,7 @@ namespace SCDT52CW2
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
             }
             else
             {
@@ -62,6 +62,10 @@ namespace SCDT52CW2
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "Admin",
+                    pattern: "{area=Admin}/{controller=ManageRoles}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "/{area=Home}/{controller=Home}/{action=Index}/{id?}"

@@ -10,8 +10,8 @@ using SCDT52CW2Data;
 namespace SCDT52CW2Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210527211335_changeIssues")]
-    partial class changeIssues
+    [Migration("20210531213618_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -266,10 +266,6 @@ namespace SCDT52CW2Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Desc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IssueID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

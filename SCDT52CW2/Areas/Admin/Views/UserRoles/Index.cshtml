@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SCDT52CW2Models.ViewModels.UserRolesViewModel>;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "User Roles Manager";
+}
+
+<h1>User Roles Manager</h1>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>User ID</th>
+            <th>Email Address</th>
+            <th>Roles</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.EmailAddr</td>
+                <td>@string.Join(" , ", user.RoleTitle.ToList())</td>
+                <td>
+                    <a asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId" class="btn btn-primary" >Manage Roles</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

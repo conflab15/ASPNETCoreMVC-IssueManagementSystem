@@ -29,49 +29,62 @@
             @Html.DisplayFor(model => model.Desc)
         </div>
 
-        @if(Model.isTechnical)
+        @if (Model.isTechnical)
+        {
+            @if (Model.AffectedAssets.Count > 0)
             {
-                @if(Model.AffectedAssets.Count > 0)
-                {
-                    <table class="table table-bordered table-striped table-light table-responsive-md">
-                        <thead>
+                <table class="table table-bordered table-striped table-light table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th scope="col">AssetID</th>
+                            <th scope="col">Desc</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var asset in Model.AffectedAssets)
+                        {
                             <tr>
-                                <th scope="col">AssetID</th>
-                                <th scope="col">Desc</th>
-                                <th scope="col">Location</th>
+                                <td>@asset.AssetID</td>
+                                <td>@asset.Desc</td>
+                                <td>@asset.Location</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach(var asset in Model.AffectedAssets)
-                            {
-                                <tr>
-                                    <td>@asset.AssetID</td>
-                                    <td>@asset.Desc</td>
-                                    <td>@asset.Location</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <div class="alert alert-primary" role="alert">
-                        No assets are affected with this ticket...
-                    </div>
-                }
+                        }
+                    </tbody>
+                </table>
             }
+            else
+            {
+                <div class="alert alert-primary" role="alert">
+                    No assets are affected with this ticket...
+                </div>
+
+            }
+        }
     </div>
 </div>
 
+@if (Model.isTechnical) { 
 <div class="row justify-content-center py-3 alert alert-secondary">
     <div class="col-md-10">
         <h3 class="py-2 text-center">Create Issue Update</h3>
-        <form method="post" asp-action="Update">
+        <form method="post" asp-controller="Issue" asp-action="UpdateTicket">
             <input name="id" value="@Model.Id" type="hidden" readonly />
             <textarea type="text" class="form-control py-3" placeholder="Action Details..." name="action" rows="3"></textarea>
+
+            <label>
+                Resolved?:
+                <select name="resolved">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+            </label>
 
             <button type="submit" class="btn btn-block btn-primary mt-2">Add Issue Update</button>
 
         </form>
     </div>
-</div>
+</div> 
+}
+    
+

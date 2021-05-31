@@ -77,16 +77,26 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,UserId,Author,Actions,isClosed,isTechnical,AffectedAssets")] Issue newIssue)
+        public async Task<IActionResult> Create(int id, DateTime date, string author, string userid, string desc, bool istechnical, bool isclosed)
         {
-            if (ModelState.IsValid)
+            if (id.ToString() != null)
             {
-                _context.Issues.Add(newIssue);
+                Issue currentIssue = new Issue();
+
+                currentIssue.Id = id;
+                currentIssue.Date = date;
+                currentIssue.Author = author;
+                currentIssue.UserId = userid;
+                currentIssue.Desc = desc;
+                currentIssue.isTechnical = istechnical;
+                currentIssue.isClosed = isclosed;
+
+                await _context.Issues.AddAsync(currentIssue);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { id = newIssue.Id });
             }
-            return View(newIssue);
+
+            return RedirectToAction(nameof(Details), new { id = id });
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -110,8 +120,8 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         }
 
         //------ Functionality to perform Updates/Actions ------
-        [ActionName("Update")]
-        public async Task<IActionResult> Update(int? id, string notes, bool resolved)
+        [ActionName("UpdateTicket")]
+        public async Task<IActionResult> UpdateTicket(int? id, string notes, bool resolved)
         {
             var issueModel = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -145,7 +155,5 @@ namespace SCDT52CW2.Areas.Issues.Controllers
 
             return RedirectToAction(nameof(Details), new { id = id });
         }
-
-
     }
 }
