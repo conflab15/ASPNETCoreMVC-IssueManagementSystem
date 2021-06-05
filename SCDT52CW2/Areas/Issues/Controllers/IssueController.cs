@@ -24,21 +24,9 @@ namespace SCDT52CW2.Areas.Issues.Controllers
 
         //Delete Index below, create API calls for the Data Tables for general and technical issues...
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            //This is rubbish
-            IssuesModel issueModel = new IssuesModel
-            {
-                generalIssue = from e in _context.Issues
-                               where e.isTechnical == false
-                               select e,
-
-                technicalIssue = from f in _context.Issues
-                                 where f.isTechnical == true
-                                 select f
-            };
-
-            return View(issueModel);
+            return View();
         }
 
         //API Calls for the Data Tables in the Issue Area Index

@@ -21,9 +21,9 @@ namespace SCDT52CW2.Areas.Asset.Controllers
         }
 
         // GET: Asset/Asset
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Assets.ToListAsync());
+            return View();
         }
 
         //API Call for the data table to get all of the Assets, as this needs to be returned as a json object...
@@ -55,7 +55,7 @@ namespace SCDT52CW2.Areas.Asset.Controllers
         }
 
         //POST
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> Upsert(Assets asset)
         {
             if (ModelState.IsValid)
