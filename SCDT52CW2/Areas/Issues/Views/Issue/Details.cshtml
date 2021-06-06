@@ -5,29 +5,27 @@
     ViewData["Title"] = "Manage Issue";
 }
 
-<div class="container">
+<div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
     <div class="row">
-        <div class="col-10">
+        <div class="col">
             <h1>Issue ID: @Html.DisplayFor(model => model.Id)</h1>
         </div>
-        <div class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
+    </div>
+    <div class="row pt-5">
+        <div class="col-6"><h2>Issue Date:</h2></div>
+        <div class="col-6">
+            <h2>@Html.DisplayFor(model => model.Date)</h2>
         </div>
-        <div class="col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </div>
-        <div class="col-sm-10">
-            @Html.DisplayFor(model => model.Author)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Desc)
-        </div>
-        <div class="col-sm-10">
-            @Html.DisplayFor(model => model.Desc)
-        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col-6"><h2>Author:</h2></div>
+        <div class="col-6"><h2>@Html.DisplayFor(model => model.Author)</h2></div>
+    </div>
+    <div class="row pt-2">
+        <div class="col-6"><h2>Description:</h2></div>
+        <div class="col-6"><h2>@Html.DisplayFor(model => model.Desc)</h2></div>
+    </div>
+    <div class="row">
 
         @if (Model.isTechnical)
         {
@@ -65,27 +63,29 @@
     </div>
 </div>
 
-@if (Model.isTechnical) { 
-<div class="row justify-content-center py-3 alert alert-secondary">
-    <div class="col-md-10">
-        <h3 class="py-2 text-center">Create Issue Update</h3>
-        <form method="post" asp-controller="Issue" asp-action="UpdateTicket">
-            <input name="id" value="@Model.Id" type="hidden" readonly />
-            <textarea type="text" class="form-control py-3" placeholder="Action Details..." name="action" rows="3"></textarea>
 
-            <label>
-                Resolved?:
-                <select name="resolved">
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </select>
-            </label>
+<div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
+    <div class="row">
+        <div class="col">
+            <h3 class="py-2 text-center">Create Issue Update</h3>
+            <form method="post" asp-controller="Issue" asp-action="UpdateTicket">
+                <input name="id" value="@Model.Id" type="hidden" readonly />
+                <textarea type="text" class="form-control py-3" placeholder="Action Details..." name="action" rows="3"></textarea>
 
-            <button type="submit" class="btn btn-block btn-primary mt-2">Add Issue Update</button>
+                <label class="pt-2">
+                    Resolved?:
+                    <select name="resolved">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </label>
 
-        </form>
+                <button type="submit" class="btn btn-block btn-primary mt-2">Add Issue Update</button>
+
+            </form>
+        </div>
     </div>
 </div> 
-}
+
     
 

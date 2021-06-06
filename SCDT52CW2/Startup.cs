@@ -61,11 +61,7 @@ namespace SCDT52CW2
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "Admin",
-                    pattern: "{area=Admin}/{controller=ManageRoles}/{action=Index}/{id?}");
-
+            { 
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "/{area=Home}/{controller=Home}/{action=Index}/{id?}"

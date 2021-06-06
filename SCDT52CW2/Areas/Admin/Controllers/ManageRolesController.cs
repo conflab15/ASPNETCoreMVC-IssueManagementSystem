@@ -10,7 +10,6 @@ namespace SCDT52CW2.Areas.Admin.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        
         public ManageRolesController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
@@ -23,11 +22,13 @@ namespace SCDT52CW2.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {
-            if (roleName != null)
-            {
-                await _roleManager.CreateAsync(new IdentityRole(roleName.Trim()));
-            }
 
+            var role = new IdentityRole();
+
+            role.Name = roleName;
+
+            await _roleManager.CreateAsync(role);
+            
             return RedirectToAction("Index");
         }
     }

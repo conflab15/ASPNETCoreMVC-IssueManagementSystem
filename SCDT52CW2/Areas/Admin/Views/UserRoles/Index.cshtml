@@ -23,7 +23,7 @@
                 <td>@user.EmailAddr</td>
                 <td>@string.Join(" , ", user.RoleTitle.ToList())</td>
                 <td>
-                    <a asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId" class="btn btn-primary" >Manage Roles</a>
+                    <a asp-area="Admin" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId" class="btn btn-primary">Manage Roles</a>
                 </td>
             </tr>
 

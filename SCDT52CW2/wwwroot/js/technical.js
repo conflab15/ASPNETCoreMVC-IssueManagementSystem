@@ -10,7 +10,7 @@ function loadTableDataTech() {
             "url": '/Issues/Issue/GetTechnicalIssues'
         },
         'columns': [
-            { 'data': 'iD', 'width': '20%' },
+            { 'data': 'id', 'width': '20%' },
             { 'data': 'desc', 'width': '30%' },
             { 'data': 'Date', 'width': '20%' },
             {
