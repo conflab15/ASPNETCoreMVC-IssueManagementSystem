@@ -13,22 +13,29 @@
         </div>
         <div class="row">
             <div class="col-4 pt-2">
+                @Html.DisplayNameFor(Model => Model.Id)
+            </div>
+            <div class="col-8 pt-2">
+                <input name="Id" asp-for="Id" class="form-control" readonly />
+            </div>
+
+            <div class="col-4 pt-2">
                 @Html.DisplayNameFor(Model => Model.AssetID)
             </div>
             <div class="col-8 pt-2">
-                <input asp-for="AssetID" class="form-control" placeholder="Enter the Assets ID" />
+                <input name="AssetID" asp-for="AssetID" class="form-control" placeholder="Enter the Assets ID" />
             </div>
             <div class="col-4 pt-2">
                 @Html.DisplayNameFor(Model => Model.Desc)
             </div>
             <div class="col-8 pt-2">
-                <input asp-for="Desc" class="form-control" placeholder="Enter a description for the Asset"/>
+                <input name="Desc" asp-for="Desc" class="form-control" placeholder="Enter a description for the Asset" />
             </div>
             <div class="col-4 pt-2">
                 @Html.DisplayNameFor(Model => Model.Location)
             </div>
             <div class="col-8 pt-2">
-                <input asp-for="Location" class="form-control" placeholder="Enter the Assets location" />
+                <input name="Location" asp-for="Location" class="form-control" placeholder="Enter the Assets location" />
             </div>
         </div>
         <div class="row">

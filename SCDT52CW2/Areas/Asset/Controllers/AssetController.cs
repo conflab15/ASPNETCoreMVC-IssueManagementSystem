@@ -56,22 +56,29 @@ namespace SCDT52CW2.Areas.Asset.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> Upsert(Assets asset)
+        public async Task<IActionResult> Upsert(int Id, string AssetID, string Desc, string Location)
         {
-            if (ModelState.IsValid)
+            if (Id == 0)
             {
-                if (asset.Id == 0)
-                {
-                    await _context.Assets.AddAsync(asset);
-                }
-                else
-                {
-                    _context.Assets.Update(asset);
-                }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Assets newAsset = new Assets();
+                newAsset.AssetID = AssetID;
+                newAsset.Desc = Desc;
+                newAsset.Location = Location;
+
+                await _context.Assets.AddAsync(newAsset);
             }
-            return View(asset);
+            else
+            {
+                var updateAsset = await _context.Assets.FirstOrDefaultAsync(m => m.Id == Id);
+
+                updateAsset.AssetID = AssetID;
+                updateAsset.Desc = Desc;
+                updateAsset.Location = Location;
+
+                _context.Assets.Update(updateAsset);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpDelete]
