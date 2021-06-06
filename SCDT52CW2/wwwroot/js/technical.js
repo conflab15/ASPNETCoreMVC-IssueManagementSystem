@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadTableDataTech() {
     dataTableTech = $('#technical-data').DataTable({
         'ajax': {
-            "url": '/Issue/Issue/GetTechnicalIssues'
+            "url": '/Issues/Issue/GetTechnicalIssues'
         },
         'columns': [
             { 'data': 'iD', 'width': '20%' },
@@ -18,7 +18,7 @@ function loadTableDataTech() {
                 'render': function (data) {
                     return `
                         <div class="text-center"> 
-                            <a href="" class="btn btn-success text-white">View Technical Issue</a>
+                            <a href="/Issues/Issue/Details/${data}" class="btn btn-success text-white">View Technical Issue</a>
                          </div>
                         `;
                 },

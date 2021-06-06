@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadTableDataGen() {
     dataTableGen = $('#gen-data').DataTable({
         'ajax': {
-            "url": '/Issue/Issue/GetGeneralIssues'
+            "url": '/Issues/Issue/GetGeneralIssues'
         },
         'columns': [
             { 'data': 'iD', 'width': '20%' },
@@ -18,7 +18,7 @@ function loadTableDataGen() {
                 'render': function (data) {
                     return `
                         <div class="text-center"> 
-                            <a href="" class="btn btn-success text-white">View Issue</a>
+                            <a href="/Issues/Issue/Details/${data}" class="btn btn-success text-white">View Issue</a>
                          </div>
                         `;
                 },

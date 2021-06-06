@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Data;
 using SCDT52CW2Models;
@@ -52,7 +53,7 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         public ActionResult Create()
         {
             //Instantiating a new GeneralIssue Object to set variables beforehand...
-            var general = new Issue();
+            var general = new CreateIssueViewModel();
             general.Date = DateTime.Now;
             general.Author = User.Identity.Name;
 
@@ -61,11 +62,19 @@ namespace SCDT52CW2.Areas.Issues.Controllers
             general.UserId = user.Id;
             general.isClosed = false;
 
+            //Generates a new select list item...
+            general.AssetsSelect = _context.Assets.Select(i => new SelectListItem
+            {
+                Text = i.AssetID,
+                Value = i.Id.ToString()
+            }); 
+
+
             return View(general); //Passing the View Model to the View...
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(int id, DateTime date, string author, string userid, string desc, bool istechnical, bool isclosed)
+        public async Task<IActionResult> Create(int id, DateTime date, string author, string userid, string desc, bool istechnical, bool isclosed) //Need ID of Asset from select list...
         {
             if (id.ToString() != null)
             {
@@ -79,12 +88,15 @@ namespace SCDT52CW2.Areas.Issues.Controllers
                 currentIssue.isTechnical = istechnical;
                 currentIssue.isClosed = isclosed;
 
+                //Add Affected Asset Object ID? Find from list and add?
+
+
                 await _context.Issues.AddAsync(currentIssue);
 
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Details), new { id = id });
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int? id)

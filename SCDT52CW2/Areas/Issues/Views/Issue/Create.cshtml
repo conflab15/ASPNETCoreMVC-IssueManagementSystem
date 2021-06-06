@@ -1,7 +1,7 @@
-﻿@model SCDT52CW2Models.Issue
+﻿@model SCDT52CW2Models.ViewModels.CreateIssueViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Category Manager";
+    ViewData["Title"] = "Create Ticket";
 }
 
 <h1>Raise a new Issue</h1>
@@ -37,6 +37,17 @@
                     </select>
                 </label>
             </div>
+
+            <div class="form-group">
+                <label asp-for="AffectedAssets">
+                    Affected Assets? 
+
+                    @Html.DropDownListFor(m => m.AssetsSelect, new SelectList(Model.AssetsSelect), "Select Asset", new { @class = "form-control" })
+
+                </label>
+            </div>
+
+
             <div class="form-group">
                 <label asp-for="isClosed">
                     Ticket Status:

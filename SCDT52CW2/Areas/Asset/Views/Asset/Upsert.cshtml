@@ -4,7 +4,7 @@
     ViewData["Title"] = "Asset Management";
 }
 
-<form method="post" asp-action="Upsert">
+<form method="post" asp-action="Upsert" asp-controller="Asset">
     <div class="container bg-dark rounded shadow-lg p-3 rounded justify-content-xl-center text-center text-light">
         <div class="row">
             <div class="col-12 pb-4">
@@ -48,10 +48,10 @@
                 {
                     <div class="row">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary form-control">Create Asset</button>
+                            <button type="submit" asp-area="Asset" asp-controller="Asset" asp-action="Upsert" class="btn btn-primary form-control">Create Asset</button>
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success form-control">Back to Asset List</a>
+                            <a href="/Asset/Asset/Index" class="btn btn-success form-control">Back to Asset List</a>
                         </div>
                     </div>}
             </div>
