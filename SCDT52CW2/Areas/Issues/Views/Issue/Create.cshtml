@@ -10,22 +10,22 @@
     <div class="col-md-4">
         <form method="post" asp-action="Create" asp-controller="Issue">
             <div class="form-group">
-                <input name="id" asp-for="Id" readonly class="form-control" value="@Model.Id" />
+                <input name="id" asp-for="Id" readonly class="form-control" value="@Model.Issue.Id" />
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label">@Html.DisplayNameFor(m => m.Date)</label>
-                <input name="date" asp-for="Date" readonly class="form-control" value="@Model.Date"/>
+                <label asp-for="Date" class="control-label">@Html.DisplayNameFor(m => m.Issue.Date)</label>
+                <input name="date" asp-for="Date" readonly class="form-control" value="@Model.Issue.Date"/>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label">@Html.DisplayNameFor(m => m.Author)</label>
-                <input name="author" asp-for="Author" readonly class="form-control" value="@Model.Author"/>
+                <label asp-for="Author" class="control-label">@Html.DisplayNameFor(m => m.Issue.Author)</label>
+                <input name="author" asp-for="Author" readonly class="form-control" value="@Model.Issue.Author"/>
             </div>
             <div class="form-group">
-                <input name="userid" asp-for="UserId" readonly class="form-control" value="@Model.UserId" />
+                <input name="userid" asp-for="UserId" readonly class="form-control" value="@Model.Issue.UserId" />
             </div>
 
             <div class="form-group">
-                <label asp-for="Desc" class="control-label">@Html.DisplayNameFor(m => m.Desc)</label>
+                <label asp-for="Desc" class="control-label">@Html.DisplayNameFor(m => m.Issue.Desc)</label>
                 <input name="desc" asp-for="Desc" class="form-control" />
             </div>
             <div class="form-group">
@@ -42,7 +42,7 @@
                 <label asp-for="AffectedAssets">
                     Affected Assets? 
 
-                    @Html.DropDownListFor(m => m.AssetsSelect, new SelectList(Model.AssetsSelect), "Select Asset", new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Issue.AffectedAsset, Model.AssetsSelect, "Select Asset", new { @class = "form-control" })
 
                 </label>
             </div>
@@ -64,7 +64,7 @@
             </div>
         </form>
         <div>
-            <a asp-action="Index" class="btn btn-outline-primary">Back</a>
+            <a href="/Issues/Issue/Index" class="btn btn-outline-primary">Back</a>
         </div>
     </div>
 </div>

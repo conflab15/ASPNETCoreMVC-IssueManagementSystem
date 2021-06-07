@@ -40,6 +40,7 @@ namespace SCDT52CW2.Areas.Admin.Controllers
         }
 
         //GET
+        [HttpGet]
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;

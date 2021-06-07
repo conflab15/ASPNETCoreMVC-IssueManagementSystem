@@ -54,18 +54,19 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         {
             //Instantiating a new GeneralIssue Object to set variables beforehand...
             var general = new CreateIssueViewModel();
-            general.Date = DateTime.Now;
-            general.Author = User.Identity.Name;
+            general.Issue = new Issue();
+            general.Issue.Date = DateTime.Now;
+            general.Issue.Author = User.Identity.Name;
 
             var user = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            general.UserId = user.Id;
-            general.isClosed = false;
+            general.Issue.UserId = user.Id;
+            general.Issue.isClosed = false;
 
             //Generates a new select list item...
             general.AssetsSelect = _context.Assets.Select(i => new SelectListItem
             {
-                Text = i.AssetID,
+                Text = i.Desc,
                 Value = i.Id.ToString()
             }); 
 
@@ -74,24 +75,23 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(int id, DateTime date, string author, string userid, string desc, bool istechnical, bool isclosed) //Need ID of Asset from select list...
+        public async Task<IActionResult> Create(CreateIssueViewModel vm, int id, DateTime date, string author, string userid, string desc, bool istechnical, bool isclosed) //Need ID of Asset from select list...
         {
-            if (id.ToString() != null)
+            if (vm.Issue.Id.ToString() != null)
             {
-                Issue currentIssue = new Issue();
-
-                currentIssue.Id = id;
-                currentIssue.Date = date;
-                currentIssue.Author = author;
-                currentIssue.UserId = userid;
-                currentIssue.Desc = desc;
-                currentIssue.isTechnical = istechnical;
-                currentIssue.isClosed = isclosed;
+                vm.Issue.Id = id;
+                vm.Issue.Date = date;
+                vm.Issue.Author = author;
+                vm.Issue.UserId = userid;
+                vm.Issue.Desc = desc;
+                vm.Issue.isTechnical = istechnical;
+                vm.Issue.isClosed = isclosed;
+                vm.Issue.AffectedAsset = vm.Issue.AffectedAsset;
 
                 //Add Affected Asset Object ID? Find from list and add?
 
 
-                await _context.Issues.AddAsync(currentIssue);
+                await _context.Issues.AddAsync(vm.Issue);
 
                 await _context.SaveChangesAsync();
             }
@@ -106,9 +106,11 @@ namespace SCDT52CW2.Areas.Issues.Controllers
                 return NotFound();
             }
 
-            var issue = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);
+            //var issue = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);
 
-            if(issue == null)
+            var issue = await _context.Issues.Include("Asset").FirstOrDefaultAsync(m => m.Id == id);
+
+            if (issue == null)
             {
                 return NotFound();
             }
@@ -120,7 +122,7 @@ namespace SCDT52CW2.Areas.Issues.Controllers
         }
 
         //------ Functionality to perform Updates/Actions ------
-        [ActionName("UpdateTicket")]
+        [HttpPost]
         public async Task<IActionResult> UpdateTicket(int? id, string notes, bool resolved)
         {
             var issueModel = await _context.Issues.FirstOrDefaultAsync(m => m.Id == id);

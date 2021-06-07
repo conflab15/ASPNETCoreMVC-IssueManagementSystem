@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCDT52CW2Data;
 
-namespace SCDT52CW2.Data.Migrations
+namespace SCDT52CW2Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210607102111_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,16 +237,11 @@ namespace SCDT52CW2.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IssueId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IssueId");
 
                     b.ToTable("Assets");
                 });
@@ -255,6 +252,9 @@ namespace SCDT52CW2.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AffectedAsset")
+                        .HasColumnType("int");
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -278,6 +278,8 @@ namespace SCDT52CW2.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AffectedAsset");
 
                     b.ToTable("Issues");
                 });
@@ -370,11 +372,15 @@ namespace SCDT52CW2.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SCDT52CW2Models.Assets", b =>
+            modelBuilder.Entity("SCDT52CW2Models.Issue", b =>
                 {
-                    b.HasOne("SCDT52CW2Models.Issue", null)
-                        .WithMany("AffectedAssets")
-                        .HasForeignKey("IssueId");
+                    b.HasOne("SCDT52CW2Models.Assets", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AffectedAsset")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
                 });
 
             modelBuilder.Entity("SCDT52CW2Models.Update", b =>
@@ -397,8 +403,6 @@ namespace SCDT52CW2.Data.Migrations
             modelBuilder.Entity("SCDT52CW2Models.Issue", b =>
                 {
                     b.Navigation("Actions");
-
-                    b.Navigation("AffectedAssets");
                 });
 #pragma warning restore 612, 618
         }

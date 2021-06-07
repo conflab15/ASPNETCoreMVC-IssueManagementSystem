@@ -13,9 +13,7 @@
     </div>
     <div class="row pt-5">
         <div class="col-6"><h2>Issue Date:</h2></div>
-        <div class="col-6">
-            <h2>@Html.DisplayFor(model => model.Date)</h2>
-        </div>
+        <div class="col-6"><h2>@Html.DisplayFor(model => model.Date)</h2></div>
     </div>
     <div class="row pt-2">
         <div class="col-6"><h2>Author:</h2></div>
@@ -25,52 +23,98 @@
         <div class="col-6"><h2>Description:</h2></div>
         <div class="col-6"><h2>@Html.DisplayFor(model => model.Desc)</h2></div>
     </div>
-    <div class="row">
+</div>
 
-        @if (Model.isTechnical)
-        {
-            @if (Model.AffectedAssets.Count > 0)
+<br />
+
+<div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
+    <div class="row">
+        <div class="col">
+
+            @if (Model.isTechnical)
             {
-                <h1>Affected Assets?</h1>
-                <table class="table table-bordered table-striped table-light table-responsive-md">
+                @if (Model.AffectedAsset > 0)
+                {
+                    <h1>Affected Assets?</h1>
+                    <table class="table table-bordered table-striped table-dark table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th scope="col">AssetID</th>
+                                <th scope="col">Desc</th>
+                                <th scope="col">Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>@Model.Asset.AssetID</td>
+                                <td>@Model.Asset.Desc</td>
+                                <td>@Model.Asset.Location</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-primary" role="alert">
+                        No assets are affected with this ticket...
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<br />
+
+<!-- Add View to display actions -->
+<div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
+    <div class="row">
+        <div class="col">
+            @if (Model.Actions.Count > 0)
+            {
+                <table class="table table-bordered table-striped table-dark table-responsive-md">
                     <thead>
                         <tr>
-                            <th scope="col">AssetID</th>
-                            <th scope="col">Desc</th>
-                            <th scope="col">Location</th>
+                            <th>Author</th>
+                            <th>Notes</th>
+                            <th>Date</th>
+                            <th>Resolved?</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var asset in Model.AffectedAssets)
-                        {
-                            <tr>
-                                <td>@asset.AssetID</td>
-                                <td>@asset.Desc</td>
-                                <td>@asset.Location</td>
-                            </tr>
-                        }
+                        @foreach (var action in Model.Actions)
+                {
+                    <tr>
+                        <td>@action.Author</td>
+                        <td>@action.Notes</td>
+                        <td>@action.Date</td>
+                        <td>@action.isResolved</td>
+                    </tr>
+                }
                     </tbody>
                 </table>
             }
             else
             {
-                <div class="alert alert-primary" role="alert">
-                    No assets are affected with this ticket...
+                <div class="alert alert-danger" role="alert">
+                    No actions have been reported for this issue... Add an action below...
                 </div>
-
             }
-        }
+        </div>
     </div>
 </div>
 
-
+<br />
 <div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
     <div class="row">
         <div class="col">
             <h3 class="py-2 text-center">Create Issue Update</h3>
-            <form method="post" asp-controller="Issue" asp-action="UpdateTicket">
+            <form method="post" action="/Issues/Issue/UpdateTicket">
                 <input name="id" value="@Model.Id" type="hidden" readonly />
-                <textarea type="text" class="form-control py-3" placeholder="Action Details..." name="action" rows="3"></textarea>
+                <textarea name="notes" type="text" class="form-control py-3" placeholder="Action Details..."  rows="3"></textarea>
 
                 <label class="pt-2">
                     Resolved?:

@@ -12,7 +12,7 @@ function loadTableDataGen() {
         'columns': [
             { 'data': 'id', 'width': '20%' },
             { 'data': 'desc', 'width': '30%' },
-            { 'data': 'Date', 'width': '20%' },
+            { 'data': 'date', 'width': '20%' },
             {
                 'data': 'id',
                 'render': function (data) {

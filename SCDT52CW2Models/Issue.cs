@@ -33,12 +33,14 @@ namespace SCDT52CW2Models
         public bool isTechnical { get; set; }
 
         [Display(Name = "Assets Affected")]
-        public List<Assets> AffectedAssets { get; set; }
+        public int AffectedAsset { get; set; }
+
+        [ForeignKey("AffectedAsset")]
+        public Assets Asset{ get; set; }
 
         public Issue()
         {
             Actions = new List<Update>();
-            AffectedAssets = new List<Assets>();
         }
     }
 }

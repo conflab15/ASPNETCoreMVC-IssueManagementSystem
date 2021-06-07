@@ -61,11 +61,12 @@ namespace SCDT52CW2
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            { 
+            {
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "/{area=Home}/{controller=Home}/{action=Index}/{id?}"
                 );
+
                 endpoints.MapRazorPages();
             });
         }
