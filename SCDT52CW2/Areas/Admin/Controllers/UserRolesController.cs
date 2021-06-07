@@ -17,12 +17,14 @@ namespace SCDT52CW2.Areas.Admin.Controllers
 
         public UserRolesController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
+            //Injecting Dependencies into the controller... 
             _roleManager = roleManager;
             _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
+            //Index Controller gets all of the available users and returns as a List... 
             var users = await _userManager.Users.ToListAsync();
             var userRolesVMList = new List<UserRolesViewModel>();
 
@@ -36,6 +38,7 @@ namespace SCDT52CW2.Areas.Admin.Controllers
                 };
                 userRolesVMList.Add(currentVM);
             }
+            //This obtains the relevant details from the UserModel, we don't need to see passwords and other fields in this element...
             return View(userRolesVMList);
         }
 

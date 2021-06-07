@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Data;
 using SCDT52CW2Models;
@@ -11,36 +7,41 @@ using SCDT52CW2Models;
 namespace SCDT52CW2.Areas.Asset.Controllers
 {
     [Area("Asset")]
+    //Authorise Statement here...
     public class AssetController : Controller
     {
         private readonly ApplicationDbContext _context;
 
         public AssetController(ApplicationDbContext context)
         {
+            //Injecting Database dependecy
             _context = context;
         }
 
         // GET: Asset/Asset
         public IActionResult Index()
         {
-            return View();
+            return View(); //No data is returned to this view as it is dealt with using the DataTable and Ajax API call below
         }
 
-        //API Call for the data table to get all of the Assets, as this needs to be returned as a json object...
+        //API Call for the data table to get all of the Assets, as this needs to be returned as a json object
         [HttpGet]
+        //Get Asset/Asset/GetAssets
         public IActionResult GetAssets()
         {
             var all = _context.Assets;
-            return Json(new { data = all });
+            return Json(new { data = all }); //Returns JSON variables to the Datatable in the asset.js script file
         }
 
         //Upsert Action
+        //GET: Asset/Asset/Upsert/ID
         public async Task<IActionResult> Upsert(int? id)
         {
             Assets asset = new Assets();
 
             if (id == null)
             {
+                //If the ID is empty, create a new empty Asset and return it...
                 return View(asset);
             }
 
@@ -56,10 +57,11 @@ namespace SCDT52CW2.Areas.Asset.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> Upsert(int Id, string AssetID, string Desc, string Location)
+        public async Task<IActionResult> Upsert(int Id, string AssetID, string Desc, string Location) //Passing Variables from the form
         {
             if (Id == 0)
             {
+                //IF the ID = 0, a new asset is created
                 Assets newAsset = new Assets();
                 newAsset.AssetID = AssetID;
                 newAsset.Desc = Desc;
@@ -69,6 +71,7 @@ namespace SCDT52CW2.Areas.Asset.Controllers
             }
             else
             {
+                //Else, the current Asset is found, and the details are then updated
                 var updateAsset = await _context.Assets.FirstOrDefaultAsync(m => m.Id == Id);
 
                 updateAsset.AssetID = AssetID;
@@ -84,6 +87,7 @@ namespace SCDT52CW2.Areas.Asset.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
+            //Delete Function which is called by the Sweet Alert Function in the asset.js script
             var asset = await _context.Assets.FindAsync(id);
 
             if (asset == null)

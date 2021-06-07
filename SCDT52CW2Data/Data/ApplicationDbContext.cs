@@ -7,6 +7,7 @@ namespace SCDT52CW2Data
     public class ApplicationDbContext : IdentityDbContext
     {
 
+        //DbSets for each Model of the application
         public DbSet<Assets> Assets { get; set; }
         public DbSet<Issue> Issues { get; set; }
         public DbSet<Update> Updates { get; set; }

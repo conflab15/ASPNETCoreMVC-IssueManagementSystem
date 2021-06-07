@@ -25,10 +25,12 @@ function loadTableData() {
                 },
                 'width': '30%'
             }
+            //The above script uses a DataTable plugin to display results produced in an ajax API call produced by the Asset Controller to list the records of assets within the database...
+            //The DataTable is rendered within the Index View to view the assets, where a user can choose to Edit or Delete Assets...
         ]
     });
 }
-
+//Delete JS Function using the Sweet Alert plugin produces a pop up message confirming the delete, and then a success message once the delete has been actioned...
 function Delete(url) {
     Swal.fire({
         title: 'Are you sure?',

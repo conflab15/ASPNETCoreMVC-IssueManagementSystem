@@ -4,67 +4,69 @@
     ViewData["Title"] = "Create Ticket";
 }
 
-<h1>Raise a new Issue</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-action="Create" asp-controller="Issue">
-            <div class="form-group">
-                <input name="id" asp-for="Id" readonly class="form-control" value="@Model.Issue.Id" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">@Html.DisplayNameFor(m => m.Issue.Date)</label>
-                <input name="date" asp-for="Date" readonly class="form-control" value="@Model.Issue.Date"/>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label">@Html.DisplayNameFor(m => m.Issue.Author)</label>
-                <input name="author" asp-for="Author" readonly class="form-control" value="@Model.Issue.Author"/>
-            </div>
-            <div class="form-group">
-                <input name="userid" asp-for="UserId" readonly class="form-control" value="@Model.Issue.UserId" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Desc" class="control-label">@Html.DisplayNameFor(m => m.Issue.Desc)</label>
-                <input name="desc" asp-for="Desc" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="isTechnical">
-                    Technical Issue?:
-                    <select name="istechnical" asp-for="isTechnical">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="AffectedAssets">
-                    Affected Assets? 
-
-                    @Html.DropDownListFor(m => m.Issue.AffectedAsset, Model.AssetsSelect, "Select Asset", new { @class = "form-control" })
-
-                </label>
-            </div>
-
-
-            <div class="form-group">
-                <label asp-for="isClosed">
-                    Ticket Status:
-                    <select name="isclosed" asp-for="isClosed">
-                        <option value="false">Keep Ticket Open</option>
-                        <option value="true">Close Ticket</option>
-                    </select>
-                </label>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+<div class="container bg-dark rounded shadow-lg p-3 pb-5 rounded justify-content-xl-center text-center text-light">
+    <h1 class="text-light">Raise a new Issue</h1>
+    <br />
+    <div class="row">
+        <div class="col">
+            <form method="post" asp-action="Create" asp-controller="Issue">
+                <div class="form-group">
+                    <input name="id" type="hidden" asp-for="Id" class="form-control" value="@Model.Issue.Id" />
                 </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label">@Html.DisplayNameFor(m => m.Issue.Date)</label>
+                    <input name="date" asp-for="Date" readonly class="form-control" value="@Model.Issue.Date" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label">@Html.DisplayNameFor(m => m.Issue.Author)</label>
+                    <input name="author" asp-for="Author" readonly class="form-control" value="@Model.Issue.Author" />
+                </div>
+                <div class="form-group">
+                    <input name="userid" type="hidden" asp-for="UserId" class="form-control" value="@Model.Issue.UserId" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Desc" class="control-label">@Html.DisplayNameFor(m => m.Issue.Desc)</label>
+                    <input name="desc" asp-for="Desc" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="isTechnical">
+                        Technical Issue?:
+                        <select name="istechnical" asp-for="isTechnical">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </label>
+                </div>
+                <!-- DropDown List allows for the User to Select a Asset that has an issue with... -->
+                <div class="form-group">
+                    <label asp-for="AffectedAssets">
+                        Affected Assets?
+
+                        @Html.DropDownListFor(m => m.Issue.AffectedAsset, Model.AssetsSelect, "Select Asset", new { @class = "form-control" })
+
+                    </label>
+                </div>
+
+                <!-- HTML Select List to keep ticket open or closed -->
+                <div class="form-group">
+                    <label asp-for="isClosed">
+                        Ticket Status:
+                        <select name="isclosed" asp-for="isClosed">
+                            <option value="false">Keep Ticket Open</option>
+                            <option value="true">Close Ticket</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+            <div>
+                <a href="/Issues/Issue/Index" class="btn btn-success">Back</a>
             </div>
-        </form>
-        <div>
-            <a href="/Issues/Issue/Index" class="btn btn-outline-primary">Back</a>
         </div>
     </div>
 </div>

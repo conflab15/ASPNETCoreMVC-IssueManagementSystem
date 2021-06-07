@@ -62,6 +62,7 @@ namespace SCDT52CW2
 
             app.UseEndpoints(endpoints =>
             {
+                //Default Endpount, in future, endpoints need to be configured for each area of the application...
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "/{area=Home}/{controller=Home}/{action=Index}/{id?}"

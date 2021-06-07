@@ -40,6 +40,7 @@
         </div>
         <div class="row">
             <div class="col-8 offset-4 pt-4">
+                <!-- This here ensures which function is ran within the Upsert Action, where is a ID is present, the record is updated, if not, the record is created... -->
                 @if (Model.Id != 0)
                 {
                     <div class="row">

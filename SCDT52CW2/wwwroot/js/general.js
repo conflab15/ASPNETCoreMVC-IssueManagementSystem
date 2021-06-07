@@ -4,6 +4,8 @@ $(document).ready(function () {
     loadTableDataGen();
 });
 
+//Much like the asset.js file, this produces a DataTable for the General Issues found within the database which gets returned by an API call from the controller...
+
 function loadTableDataGen() {
     dataTableGen = $('#gen-data').DataTable({
         'ajax': {
