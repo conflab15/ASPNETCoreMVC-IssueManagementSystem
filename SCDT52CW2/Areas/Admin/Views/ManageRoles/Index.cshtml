@@ -7,16 +7,20 @@
 
 <form method="post" action="/Admin/ManageRoles/AddRole">
     <div class="container bg-dark rounded shadow-lg p-3 rounded justify-content-xl-center text-center text-light">
+        <br />
         <h1>Create new role</h1>
+        <br />
         <div class="row">
-            <div class="col">
-                Role
+            <div class="col-2">
+                Role: 
             </div>
-            <div class="col">
-                <input name="roleName" class="form-control w-25"/>
+            <div class="col-6">
+                <input name="roleName" class="form-control"/>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-info">Add New Role</button>
             </div>
         </div>
-        <button type="submit" class="btn btn-info">Add New Role</button>
     </div>
 </form>
 

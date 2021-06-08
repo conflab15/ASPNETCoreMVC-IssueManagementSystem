@@ -18,6 +18,10 @@ namespace SCDT52CW2.Areas.Asset.Controllers
             _context = context;
         }
 
+        public AssetController()
+        {
+        }
+
         // GET: Asset/Asset
         public IActionResult Index()
         {
@@ -101,6 +105,7 @@ namespace SCDT52CW2.Areas.Asset.Controllers
 
             return Json(new { success = true, message = "Asset Deleted" });
         }
+
     }
 
 
