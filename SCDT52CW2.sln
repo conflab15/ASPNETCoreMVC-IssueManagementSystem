@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCDT52CW2Data", "SCDT52CW2D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCDT52CW2Models", "SCDT52CW2Models\SCDT52CW2Models.csproj", "{9F92823D-6954-4170-88B2-446B60C490D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetControllerTests", "AssetControllerTests\AssetControllerTests.csproj", "{0035F4E8-F6EB-4A4E-9667-06B2CC938CD5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{9F92823D-6954-4170-88B2-446B60C490D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F92823D-6954-4170-88B2-446B60C490D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F92823D-6954-4170-88B2-446B60C490D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0035F4E8-F6EB-4A4E-9667-06B2CC938CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0035F4E8-F6EB-4A4E-9667-06B2CC938CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0035F4E8-F6EB-4A4E-9667-06B2CC938CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0035F4E8-F6EB-4A4E-9667-06B2CC938CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
