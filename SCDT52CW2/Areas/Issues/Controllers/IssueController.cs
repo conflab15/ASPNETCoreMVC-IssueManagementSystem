@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Data;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace SCDT52CW2.Areas.Issues.Controllers
 {
     [Area("Issues")]
-    //[Authorize]
+    [Authorize]
     public class IssueController : Controller
     {
         private readonly ApplicationDbContext _context;

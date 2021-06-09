@@ -3,8 +3,34 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container bg-dark rounded shadow-lg p-3 rounded justify-content-xl-center text-center text-light">
+    <div class="row">
+        <div class="col">
+            <img src="~/images/ucslogo.jpg" width="250" height="100" alt="UCS Logo" />
+        </div>
+    </div>
+    <br />
+    <h1>UCS IT Management System Options: </h1>
+    <br />
+    <div class="row pt-5">
+        <div class="col">
+            <a href="/Asset/Asset/Index" class="btn btn-lg btn-primary">Manage Assets</a>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col">
+            <a href="/Issues/Issue/Index" class="btn btn-lg btn-primary">Manage Issue Tickets</a>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col">
+            <a href="/Admin/UserRoles/Index" class="btn btn-lg btn-primary">Manage User Roles</a>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col">
+            <a href="/Admin/ManageRoles/Index" class="btn btn-lg btn-primary">Manage Roles</a>
+        </div>
+    </div>
 </div>
 

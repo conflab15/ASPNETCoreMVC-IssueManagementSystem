@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Models.ViewModels;
@@ -10,6 +11,7 @@ namespace SCDT52CW2.Areas.Admin.Controllers
 {
     //Role Authorisation Statement goes here...
     [Area("Admin")]
+    [Authorize]
     public class UserRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

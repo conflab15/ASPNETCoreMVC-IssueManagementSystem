@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SCDT52CW2Data;
@@ -8,6 +9,7 @@ namespace SCDT52CW2.Areas.Asset.Controllers
 {
     [Area("Asset")]
     //Authorise Statement here...
+    [Authorize]
     public class AssetController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -16,10 +18,6 @@ namespace SCDT52CW2.Areas.Asset.Controllers
         {
             //Injecting Database dependecy
             _context = context;
-        }
-
-        public AssetController()
-        {
         }
 
         // GET: Asset/Asset

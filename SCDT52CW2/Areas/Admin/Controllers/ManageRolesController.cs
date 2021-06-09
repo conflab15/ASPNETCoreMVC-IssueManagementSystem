@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 namespace SCDT52CW2.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize]
     public class ManageRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

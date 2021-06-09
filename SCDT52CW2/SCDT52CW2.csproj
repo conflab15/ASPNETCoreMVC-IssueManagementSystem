@@ -23,4 +23,8 @@
     <ProjectReference Include="..\SCDT52CW2Models\SCDT52CW2Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
